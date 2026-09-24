@@ -10,6 +10,21 @@
     <header>
         <h1>Candidatos - Eleição 2026 - MG</h1>
     </header>
-    
+    <form method="get" th:action="@{/}" class="filtros"> 
+    <input type="text" name="texto" th:value="${textoSelecionado}"> 
+    <select name="cargo">
+        <option value ="" th:selected="${cargoSelecionado == ''}">Todos</option>
+        <option th:each="c : ${cargos}"
+                th:value="${c}"
+                th:text="${c}"
+                th:selected="${c == cargoSelecionado}"></option>
+    </select>
+    <div class="card" th:each="cand : ${candidatos}"> 
+    <img th:src="@{'/images/candidatos/' + ${cand.nomeArquivoFoto}}" th:alt="${cand.nomeUrna}" class="foto-candidato"> 
+    <p class="situacao" th:if="${cand.situacaoCandidatura != null and !cand.situacaoCandidatura.isBlank()}"
+        th:text="${cand.situacaoCandidatura}">Situação</p>
+    <p class="extra" th:if="${cand.idade > 0}">
+        <span th:text="${cand.idade = 'anos'}">idade</span>
+    </p>
 </body>
 </html>
